@@ -709,7 +709,8 @@ class ImpalaShell(cmd.Cmd):
     """Create a beeswax query object from a query string"""
     query = BeeswaxService.Query()
     query.hadoop_user = self.user
-    query.query = query_str
+    # query does not accept unicode strings, explicitly encode the string into utf-8.
+    query.query = query_str.encode('utf-8', 'ignore')
     query.configuration = self.__options_to_string_list()
     return query
 
